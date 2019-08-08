@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Penguin.Net.IPService</name>
+    </assembly>
+    <members>
+        <member name="T:Penguin.Net.IPServices.IPService">
+            <summary>
+            A service intended for use with managing IP based connections to a server
+            </summary>
+        </member>
+        <member name="F:Penguin.Net.IPServices.IPService.QueryTimeout">
+            <summary>
+            The default timeout in MS between (static) connections to the Whois host
+            </summary>
+        </member>
+        <member name="P:Penguin.Net.IPServices.IPService.DiscoveredRanges">
+            <summary>
+            An accessor for the cached IP information for use in debugging
+            </summary>
+        </member>
+        <member name="P:Penguin.Net.IPServices.IPService.LastSave">
+            <summary>
+            The last time the Cache was persisted to disk
+            </summary>
+        </member>
+        <member name="P:Penguin.Net.IPServices.IPService.PersistDelayMS">
+            <summary>
+            An optional dely in MS between persisting the cache to the disk, to avoid too much time spend serializing data
+            </summary>
+        </member>
+        <member name="M:Penguin.Net.IPServices.IPService.#ctor(System.Func{System.String},System.Action{System.Collections.Generic.List{Penguin.Net.IPServices.IPAnalysis}},System.Func{System.Collections.Generic.List{Penguin.Net.IPServices.IPAnalysis}})">
+            <summary>
+            Constructs a new instance of the IP service
+            </summary>
+            <param name="loadBlacklist">A function returning the contents of the blacklist to use when banning IPs</param>
+            <param name="saveFunction">A function accepting a list of IP analysis, for the user to define the way the cache is persisted</param>
+            <param name="loadFunction">A function returning a list of IP analysis, for the user to define the way the cache is loaded</param>
+        </member>
+        <member name="M:Penguin.Net.IPServices.IPService.#ctor(System.String,System.Action{System.Collections.Generic.List{Penguin.Net.IPServices.IPAnalysis}},System.Func{System.Collections.Generic.List{Penguin.Net.IPServices.IPAnalysis}})">
+            <summary>
+            Constructs a new instance of the IP service
+            </summary>
+            <param name="blackList">The string contents of a blacklist file</param>
+            <param name="saveFunction">A function accepting a list of IP analysis, for the user to define the way the cache is persisted</param>
+            <param name="loadFunction">A function returning a list of IP analysis, for the user to define the way the cache is loaded</param>
+        </member>
+        <member name="M:Penguin.Net.IPServices.IPService.IsBlacklisted(System.String)">
+            <summary>
+            Returns a bool representing whether or not any of the fields of the IP analysis match the blacklist
+            </summary>
+            <param name="Ip">The IP to check</param>
+            <returns>Whether or not the IP is blacklisted</returns>
+        </member>
+        <member name="M:Penguin.Net.IPServices.IPService.LoadAnalysis">
+            <summary>
+            Force calls the function for loading the analysis from disk
+            </summary>
+        </member>
+        <member name="M:Penguin.Net.IPServices.IPService.QueryIP(System.String)">
+            <summary>
+            Returns a number of IP analysis that contain the specified IP in their CIDR range, or - range
+            </summary>
+            <param name="Ip">The IP to search for</param>
+            <returns>a number of IP analysis that contain the specified IP in their CIDR range, or - range</returns>
+        </member>
+        <member name="M:Penguin.Net.IPServices.IPService.SaveAnalysis">
+            <summary>
+            Calls the Save function for the IP analysis cache. Will not save if a timeout is set and the timeout has not yet elapsed
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Penguin.Net.IPServices.IPService.LoadFunction">
+            <summary>
+            A function accepting a list of IP analysis, for the user to define the way the cache is loaded
+            </summary>
+        </member>
+        <member name="P:Penguin.Net.IPServices.IPService.SaveFunction">
+            <summary>
+            A function accepting a list of IP analysis, for the user to define the way the cache is persisted
+            </summary>
+        </member>
+        <member name="M:Penguin.Net.IPServices.IPService.TryLoadAnalysis">
+            <summary>
+            Attempts to load the IP cache, but ONLY if the in-memory Cache is empty
+            </summary>
+        </member>
+        <member name="T:Penguin.Net.IPServices.IPAnalysis">
+            <summary>
+            A common denominator of IP information used by the IP service
+            </summary>
+        </member>
+        <member name="P:Penguin.Net.IPServices.IPAnalysis.CIDR">
+            <summary>
+            A CIDR range representing where this IP falls
+            </summary>
+        </member>
+        <member name="P:Penguin.Net.IPServices.IPAnalysis.Country">
+            <summary>
+            The Country this IP is registered to
+            </summary>
+        </member>
+        <member name="P:Penguin.Net.IPServices.IPAnalysis.DiscoveryDate">
+            <summary>
+            The first time this IP was checked against whois for information
+            </summary>
+        </member>
+        <member name="P:Penguin.Net.IPServices.IPAnalysis.FromIp">
+            <summary>
+            an IP representing the start of the range that this IP falls into
+            </summary>
+        </member>
+        <member name="P:Penguin.Net.IPServices.IPAnalysis.NetworkName">
+            <summary>
+            The WHOIS name for this particular block of IP addresses
+            </summary>
+        </member>
+        <member name="P:Penguin.Net.IPServices.IPAnalysis.OwnerName">
+            <summary>
+            The orginization that this IP is registered to
+            </summary>
+        </member>
+        <member name="P:Penguin.Net.IPServices.IPAnalysis.ToIp">
+            <summary>
+            The end of a range of IP's that this address falls into
+            </summary>
+        </member>
+        <member name="P:Penguin.Net.IPServices.IPAnalysis.WhoisSource">
+            <summary>
+            The WHOIS server that claimed the information for this analysis
+            </summary>
+        </member>
+        <member name="M:Penguin.Net.IPServices.IPAnalysis.IsMatch(System.String)">
+            <summary>
+            Checks if a given IP falls into either the CIDR or From-To range
+            </summary>
+            <param name="IPAddress">The IP address to check</param>
+            <returns>True if the given IP is part of the same range as this one</returns>
+        </member>
+        <member name="T:Penguin.Net.IPServices.IPRange">
+            <summary>
+            A class used for retrieving a range of IP addresses based on CIDR notation or from-to notation
+            </summary>
+        </member>
+        <member name="M:Penguin.Net.IPServices.IPRange.#ctor(System.String)">
+            <summary>
+            Creates a new instance of the parsed information
+            </summary>
+            <param name="ipRange">The IP range string to be used when generating the information contained in this object</param>
+        </member>
+        <member name="M:Penguin.Net.IPServices.IPRange.GetAllIP">
+            <summary>
+            Gets a list of .net IPAddresses representing all IP's that fall in this range
+            </summary>
+            <returns>a list of .net IPAddresses representing all IP's that fall in this range</returns>
+        </member>
+        <member name="M:Penguin.Net.IPServices.IPRange.TryParseCIDRNotation(System.String)">
+            <summary>
+            Parse IP-range string in CIDR notation.
+            For example "12.15.0.0/16".
+            </summary>
+            <param name="ipRange"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Penguin.Net.IPServices.IPRange.TryParseSimpleRange(System.String)">
+            <summary>
+            Parse IP-range string "12.15-16.1-30.10-255"
+            </summary>
+            <param name="ipRange"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
