@@ -1,29 +1,32 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageProjectUrl>http://www.penguinms.com/Nuget</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/penguincms/Penguin.Net.IPService</PackageProjectUrl>
     <PackageIconUrl>http://www.penguinms.com/client/images/pg.png</PackageIconUrl>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
     <Description>The beginning of a service intended for use with blocking connections based on IP/Provider/CIDR/etc. Using whois for resolving information</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Version>1.0.4</Version>
+	<IncludeSymbols>true</IncludeSymbols>    
+<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <WarningsAsErrors>NU1605, CS1591</WarningsAsErrors>
-    <DocumentationFile>C:\SVN\Framework\Nuget\Penguin.Net.IPService\Penguin.Net.IPService.xml</DocumentationFile>
+    <DocumentationFile>Penguin.Net.IPService.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Penguin.Extensions.String" Version="1.1.8" />
+    <PackageReference Include="Penguin.Extensions.String" Version="2.0.2" />
     <PackageReference Include="Penguin.Net.Whois" Version="1.0.4" />
     <PackageReference Include="Penguin.Services.Core" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\License.txt">
+    <None Include="License.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
@@ -31,6 +34,6 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>full</DebugType>
-    <DocumentationFile>C:\SVN\Framework\Nuget\Penguin.Net.IPService\Penguin.Net.IPService.xml</DocumentationFile>
+    <DocumentationFile>Penguin.Net.IPService.xml</DocumentationFile>
   </PropertyGroup>
 </Project>
