@@ -1,4 +1,4 @@
-﻿using Penguin.Extensions.String;
+﻿using Penguin.Extensions.Strings;
 using Penguin.Net.IPServices.Registrations;
 using Penguin.Net.Whois;
 using Penguin.Net.Whois.Objects;
@@ -16,16 +16,10 @@ namespace Penguin.Net.IPServices
     /// </summary>
     public class IPService : Service
     {
-        #region Fields
-
         /// <summary>
         /// The default timeout in MS between (static) connections to the Whois host
         /// </summary>
         public double QueryTimeout = 200;
-
-        #endregion Fields
-
-        #region Properties
 
         /// <summary>
         /// An accessor for the cached IP information for use in debugging
@@ -47,10 +41,6 @@ namespace Penguin.Net.IPServices
         /// An optional dely in MS between persisting the cache to the disk, to avoid too much time spend serializing data
         /// </summary>
         public int PersistDelayMS { get; set; }
-
-        #endregion Properties
-
-        #region Constructors
 
         /// <summary>
         /// Constructs a new instance of the IP service
@@ -117,10 +107,6 @@ namespace Penguin.Net.IPServices
                 }
             }
         }
-
-        #endregion Constructors
-
-        #region Methods
 
         /// <summary>
         /// Returns a bool representing whether or not any of the fields of the IP analysis match the blacklist
@@ -283,8 +269,6 @@ namespace Penguin.Net.IPServices
         {
             _DiscoveredRanges.Add(analysis);
         }
-
-        #endregion Methods
 
         //This is going to get really slow, really fast. This should be Async and incremental
         /// <summary>
