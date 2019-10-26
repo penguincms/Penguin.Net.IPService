@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>Penguin.Net.IPService.Local</name>
+        <name>Penguin.Net.IPService</name>
     </assembly>
     <members>
         <member name="T:Penguin.Net.IPServices.IPService">
