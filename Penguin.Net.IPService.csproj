@@ -4,10 +4,12 @@
     <PackageProjectUrl>https://github.com/penguincms/Penguin.Net.IPService</PackageProjectUrl>
     <Description>The beginning of a service intended for use with blocking connections based on IP/Provider/CIDR/etc. Using whois for resolving information</Description>
     <Version>1.0.4</Version>
+    <AssemblyName>Penguin.Net.IPService</AssemblyName>
+    <RootNamespace>Penguin.Net.IPService</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Penguin.Services.Core" Version="1.0.4" />
-    <PackageReference Include="Penguin.Net.Whois" Version="1.0.5-T9M1HHH" />
+    <PackageReference Include="Penguin.Net.Whois" Version="1.0.5-T9M2XAX" />
   </ItemGroup>
   <Import Project="Penguin.Projects.Shared\Penguin.Projects.Shared.csproj" />
 </Project>
