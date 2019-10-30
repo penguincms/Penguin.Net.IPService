@@ -9,7 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Penguin.Services.Core" Version="1.0.4" />
-    <PackageReference Include="Penguin.Net.Whois" Version="1.0.5-T9M2XAX" />
+    <PackageReference Include="Penguin.Net.Whois" Version="1.0.5-T9M3AAF" />
   </ItemGroup>
   <Import Project="Penguin.Projects.Shared\Penguin.Projects.Shared.csproj" />
 </Project>
