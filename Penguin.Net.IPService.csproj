@@ -6,6 +6,7 @@
     <Version>1.0.4</Version>
     <AssemblyName>Penguin.Net.IPService</AssemblyName>
     <RootNamespace>Penguin.Net.IPService</RootNamespace>
+    <DocumentationFile>Penguin.Net.IPService.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Penguin.Services.Core" Version="1.0.4" />
