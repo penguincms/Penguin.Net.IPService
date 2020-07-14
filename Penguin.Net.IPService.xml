@@ -29,6 +29,16 @@
             An optional dely in MS between persisting the cache to the disk, to avoid too much time spend serializing data
             </summary>
         </member>
+        <member name="P:Penguin.Net.IPServices.IPService.LoadFunction">
+            <summary>
+            A function accepting a list of IP analysis, for the user to define the way the cache is loaded
+            </summary>
+        </member>
+        <member name="P:Penguin.Net.IPServices.IPService.SaveFunction">
+            <summary>
+            A function accepting a list of IP analysis, for the user to define the way the cache is persisted
+            </summary>
+        </member>
         <member name="M:Penguin.Net.IPServices.IPService.#ctor(System.Func{System.String},System.Action{System.Collections.Generic.List{Penguin.Net.IPServices.IPAnalysis}},System.Func{System.Collections.Generic.List{Penguin.Net.IPServices.IPAnalysis}})">
             <summary>
             Constructs a new instance of the IP service
@@ -69,16 +79,6 @@
             Calls the Save function for the IP analysis cache. Will not save if a timeout is set and the timeout has not yet elapsed
             </summary>
             <returns></returns>
-        </member>
-        <member name="P:Penguin.Net.IPServices.IPService.LoadFunction">
-            <summary>
-            A function accepting a list of IP analysis, for the user to define the way the cache is loaded
-            </summary>
-        </member>
-        <member name="P:Penguin.Net.IPServices.IPService.SaveFunction">
-            <summary>
-            A function accepting a list of IP analysis, for the user to define the way the cache is persisted
-            </summary>
         </member>
         <member name="M:Penguin.Net.IPServices.IPService.TryLoadAnalysis">
             <summary>

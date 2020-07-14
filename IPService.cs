@@ -42,13 +42,34 @@ namespace Penguin.Net.IPServices
         /// </summary>
         public int PersistDelayMS { get; set; }
 
+        //This is going to get really slow, really fast. This should be Async and incremental
+        /// <summary>
+        /// A function accepting a list of IP analysis, for the user to define the way the cache is loaded
+        /// </summary>
+        protected Func<List<IPAnalysis>> LoadFunction { get; set; }
+
+        /// <summary>
+        /// A function accepting a list of IP analysis, for the user to define the way the cache is persisted
+        /// </summary>
+        protected Action<List<IPAnalysis>> SaveFunction { get; set; }
+
+        private static List<IPAnalysis> _DiscoveredRanges { get; set; }
+
+        private static Object QueryLock { get; set; } = new object();
+
+        private Dictionary<string, List<string>> blacklistedRegex { get; set; }
+
+        private List<IIPRegistration> IPRegistrations { get; set; }
+
+        private DateTime LastQuery { get; set; }
+
         /// <summary>
         /// Constructs a new instance of the IP service
         /// </summary>
         /// <param name="loadBlacklist">A function returning the contents of the blacklist to use when banning IPs</param>
         /// <param name="saveFunction">A function accepting a list of IP analysis, for the user to define the way the cache is persisted</param>
         /// <param name="loadFunction">A function returning a list of IP analysis, for the user to define the way the cache is loaded</param>
-        public IPService(Func<string> loadBlacklist, Action<List<IPAnalysis>> saveFunction, Func<List<IPAnalysis>> loadFunction) : this(loadBlacklist.Invoke(), saveFunction, loadFunction)
+        public IPService(Func<string> loadBlacklist, Action<List<IPAnalysis>> saveFunction, Func<List<IPAnalysis>> loadFunction) : this((loadBlacklist ?? throw new ArgumentNullException(nameof(loadBlacklist))).Invoke(), saveFunction, loadFunction)
         {
         }
 
@@ -269,23 +290,6 @@ namespace Penguin.Net.IPServices
         {
             _DiscoveredRanges.Add(analysis);
         }
-
-        //This is going to get really slow, really fast. This should be Async and incremental
-        /// <summary>
-        /// A function accepting a list of IP analysis, for the user to define the way the cache is loaded
-        /// </summary>
-        protected Func<List<IPAnalysis>> LoadFunction { get; set; }
-
-        /// <summary>
-        /// A function accepting a list of IP analysis, for the user to define the way the cache is persisted
-        /// </summary>
-        protected Action<List<IPAnalysis>> SaveFunction { get; set; }
-
-        private static List<IPAnalysis> _DiscoveredRanges { get; set; }
-        private static Object QueryLock { get; set; } = new object();
-        private Dictionary<string, List<string>> blacklistedRegex { get; set; }
-        private List<IIPRegistration> IPRegistrations { get; set; }
-        private DateTime LastQuery { get; set; }
 
         /// <summary>
         /// Attempts to load the IP cache, but ONLY if the in-memory Cache is empty
