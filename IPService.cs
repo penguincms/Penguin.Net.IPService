@@ -1,4 +1,4 @@
-﻿using Penguin.Extensions.Strings;
+﻿using Penguin.Extensions.String;
 using Penguin.Net.IPServices.Registrations;
 using Penguin.Net.Whois;
 using Penguin.Net.Whois.Objects;
@@ -55,7 +55,7 @@ namespace Penguin.Net.IPServices
 
         private static List<IPAnalysis> _DiscoveredRanges { get; set; }
 
-        private static Object QueryLock { get; set; } = new object();
+        private static object QueryLock { get; set; } = new object();
 
         private Dictionary<string, List<string>> blacklistedRegex { get; set; }
 
