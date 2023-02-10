@@ -1,12 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1;net5.0</TargetFrameworks>
-    <PackageProjectUrl>https://github.com/PenguinCMS/Penguin.Net.IPService</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/PenguinCms/Penguin.Net.IPService</PackageProjectUrl>
     <Description>The beginning of a service intended for use with blocking connections based on IP/Provider/CIDR/etc. Using whois for resolving information</Description>
     <Version>5.0.5</Version>
     <AssemblyName>Penguin.Net.IPService</AssemblyName>
     <RootNamespace>Penguin.Net.IPService</RootNamespace>
     <DocumentationFile>Penguin.Net.IPService.xml</DocumentationFile>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Penguin.Services.Core" Version="1.0.4" />
