@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace Penguin.Net.IPServices.Registrations
+namespace Penguin.Net.IPService.Registrations
 {
     internal class CIDRRegistration : IPRegistration
     {
@@ -30,7 +30,7 @@ namespace Penguin.Net.IPServices.Registrations
                 throw new FormatException($"Unable to parse netmask bit count from {CIDR}");
             }
 
-            if (0 > netmaskBitCount || netmaskBitCount > 32)
+            if (netmaskBitCount is < 0 or > 32)
             {
                 throw new ArgumentOutOfRangeException($"Netmask bit count value of {netmaskBitCount} is invalid, must be in range 0-32");
             }

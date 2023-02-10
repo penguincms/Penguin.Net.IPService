@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 
-namespace Penguin.Net.IPServices
+namespace Penguin.Net.IPService.Objects
 {
     /// <summary>
     /// A class used for retrieving a range of IP addresses based on CIDR notation or from-to notation
@@ -22,7 +22,7 @@ namespace Penguin.Net.IPServices
                 throw new ArgumentNullException();
             }
 
-            if (!this.TryParseCIDRNotation(ipRange) && !this.TryParseSimpleRange(ipRange))
+            if (!TryParseCIDRNotation(ipRange) && !TryParseSimpleRange(ipRange))
             {
                 throw new ArgumentException();
             }
@@ -41,17 +41,17 @@ namespace Penguin.Net.IPServices
             int capacity = 1;
             for (int i = 0; i < 4; i++)
             {
-                capacity *= this.endIP[i] - this.beginIP[i] + 1;
+                capacity *= endIP[i] - beginIP[i] + 1;
             }
 
-            List<IPAddress> ips = new List<IPAddress>(capacity);
-            for (int i0 = this.beginIP[0]; i0 <= this.endIP[0]; i0++)
+            List<IPAddress> ips = new(capacity);
+            for (int i0 = beginIP[0]; i0 <= endIP[0]; i0++)
             {
-                for (int i1 = this.beginIP[1]; i1 <= this.endIP[1]; i1++)
+                for (int i1 = beginIP[1]; i1 <= endIP[1]; i1++)
                 {
-                    for (int i2 = this.beginIP[2]; i2 <= this.endIP[2]; i2++)
+                    for (int i2 = beginIP[2]; i2 <= endIP[2]; i2++)
                     {
-                        for (int i3 = this.beginIP[3]; i3 <= this.endIP[3]; i3++)
+                        for (int i3 = beginIP[3]; i3 <= endIP[3]; i3++)
                         {
                             ips.Add(new IPAddress(new byte[] { (byte)i0, (byte)i1, (byte)i2, (byte)i3 }));
                         }
@@ -92,12 +92,12 @@ namespace Penguin.Net.IPServices
             string[] ipParts0 = x[0].Split('.');
             for (int i = 0; i < 4; i++)
             {
-                ip = ip << 8;
+                ip <<= 8;
                 ip += uint.Parse(ipParts0[i]);
             }
 
             byte shiftBits = (byte)(32 - bits);
-            uint ip1 = (ip >> shiftBits) << shiftBits;
+            uint ip1 = ip >> shiftBits << shiftBits;
 
             if (ip1 != ip) // Check correct subnet address
             {
@@ -110,13 +110,13 @@ namespace Penguin.Net.IPServices
                 ip2 = (ip2 << 1) + 1;
             }
 
-            this.beginIP = new byte[4];
-            this.endIP = new byte[4];
+            beginIP = new byte[4];
+            endIP = new byte[4];
 
             for (int i = 0; i < 4; i++)
             {
-                this.beginIP[i] = (byte)((ip1 >> (3 - i) * 8) & 255);
-                this.endIP[i] = (byte)((ip2 >> (3 - i) * 8) & 255);
+                beginIP[i] = (byte)(ip1 >> (3 - i) * 8 & 255);
+                endIP[i] = (byte)(ip2 >> (3 - i) * 8 & 255);
             }
 
             return true;
@@ -131,19 +131,19 @@ namespace Penguin.Net.IPServices
         {
             string[] ipParts = ipRange.Split('.');
 
-            this.beginIP = new byte[4];
-            this.endIP = new byte[4];
+            beginIP = new byte[4];
+            endIP = new byte[4];
             for (int i = 0; i < 4; i++)
             {
                 string[] rangeParts = ipParts[i].Split('-');
 
-                if (rangeParts.Length < 1 || rangeParts.Length > 2)
+                if (rangeParts.Length is < 1 or > 2)
                 {
                     return false;
                 }
 
-                this.beginIP[i] = byte.Parse(rangeParts[0]);
-                this.endIP[i] = (rangeParts.Length == 1) ? this.beginIP[i] : byte.Parse(rangeParts[1]);
+                beginIP[i] = byte.Parse(rangeParts[0]);
+                endIP[i] = rangeParts.Length == 1 ? beginIP[i] : byte.Parse(rangeParts[1]);
             }
 
             return true;

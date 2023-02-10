@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Penguin.Net.IPServices.Registrations
+namespace Penguin.Net.IPService.Registrations
 {
     internal class RangeRegistration : IPRegistration
     {
@@ -39,7 +39,7 @@ namespace Penguin.Net.IPServices.Registrations
 
         protected ulong IpToInt(string address)
         {
-            byte[] ips = address.Split('.').Select(s => byte.Parse(s)).ToArray();
+            byte[] ips = address.Split('.').Select(byte.Parse).ToArray();
 
             byte[] ip = new byte[8];
 

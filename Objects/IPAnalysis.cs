@@ -1,13 +1,13 @@
-﻿using Penguin.Net.IPServices.Registrations;
+﻿using Penguin.Net.IPService.Registrations;
 using System;
 using System.Collections.Generic;
 
-namespace Penguin.Net.IPServices
+namespace Penguin.Net.IPService.Objects
 {
     /// <summary>
     /// A common denominator of IP information used by the IP service
     /// </summary>
-    public struct IPAnalysis : IIPRegistration
+    public struct IPAnalysis : IIPRegistration, IEquatable<IPAnalysis>
     {
         #region Properties
 
@@ -97,6 +97,36 @@ namespace Penguin.Net.IPServices
 
         [NonSerialized]
         private List<IIPRegistration> Registrations;
+        /// <inheritdoc/>
+
+        public override bool Equals(object obj)
+        {
+            throw new NotImplementedException();
+        }
+        /// <inheritdoc/>
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
+        }
+        /// <inheritdoc/>
+
+        public static bool operator ==(IPAnalysis left, IPAnalysis right)
+        {
+            return left.Equals(right);
+        }
+        /// <inheritdoc/>
+
+        public static bool operator !=(IPAnalysis left, IPAnalysis right)
+        {
+            return !(left == right);
+        }
+/// <inheritdoc/>
+
+        public bool Equals(IPAnalysis other)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion Fields
     }

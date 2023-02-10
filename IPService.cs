@@ -1,5 +1,6 @@
 ﻿using Penguin.Extensions.String;
-using Penguin.Net.IPServices.Registrations;
+using Penguin.Net.IPService.Objects;
+using Penguin.Net.IPService.Registrations;
 using Penguin.Net.Whois;
 using Penguin.Net.Whois.Objects;
 using Penguin.Services.Core;
@@ -9,7 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace Penguin.Net.IPServices
+namespace Penguin.Net.IPService
 {
     /// <summary>
     /// A service intended for use with managing IP based connections to a server
@@ -24,13 +25,7 @@ namespace Penguin.Net.IPServices
         /// <summary>
         /// An accessor for the cached IP information for use in debugging
         /// </summary>
-        public List<IPAnalysis> DiscoveredRanges
-        {
-            get
-            {
-                return _DiscoveredRanges.ToList();
-            }
-        }
+        public List<IPAnalysis> DiscoveredRanges => _DiscoveredRanges.ToList();
 
         /// <summary>
         /// The last time the Cache was persisted to disk
@@ -101,15 +96,15 @@ namespace Penguin.Net.IPServices
                         continue;
                     }
 
-                    if (line.Contains("/"))
+                    if (line.Contains('/'))
                     {
                         IPRegistrations.Add(new CIDRRegistration(line));
                     }
-                    else if (line.Contains("-"))
+                    else if (line.Contains('-'))
                     {
                         IPRegistrations.Add(new RangeRegistration(line));
                     }
-                    else if (!line.Contains(":"))
+                    else if (!line.Contains(':'))
                     {
                         IPRegistrations.Add(new SingleIPRegistration(line));
                     }
@@ -153,9 +148,9 @@ namespace Penguin.Net.IPServices
             {
                 foreach (PropertyInfo thisprop in typeof(IPAnalysis).GetProperties())
                 {
-                    if (blacklistedRegex.ContainsKey(thisprop.Name))
+                    if (blacklistedRegex.TryGetValue(thisprop.Name, out List<string> value))
                     {
-                        List<string> regex = blacklistedRegex[thisprop.Name];
+                        List<string> regex = value;
 
                         string thisVal = thisprop.GetValue(analyzeIP)?.ToString() ?? string.Empty;
 
@@ -215,7 +210,7 @@ namespace Penguin.Net.IPServices
                         System.Threading.Thread.Sleep((int)(QueryTimeout - (DateTime.Now - LastQuery).TotalMilliseconds));
                     }
 
-                    WhoisClient client = new WhoisClient();
+                    WhoisClient client = new();
 
                     client.CopyInterfaceFrom(this);
 
@@ -231,28 +226,27 @@ namespace Penguin.Net.IPServices
                         }
                     }
 
-                    List<IPAnalysis> toReturn = new List<IPAnalysis>();
+                    List<IPAnalysis> toReturn = new();
 
                     foreach (WhoisResponse response in queryResponse.WhoisResponses)
                     {
-                        IPAnalysis analysis = new IPAnalysis()
+                        IPAnalysis analysis = new()
                         {
-                            DiscoveryDate = DateTime.Now
+                            DiscoveryDate = DateTime.Now,
+                            WhoisSource = queryResponse.ServerResponses.Last().Server,
+                            CIDR = response.CIDR?.Split(",", false)?.Select(s => s.Trim())?.Where(s => !string.IsNullOrWhiteSpace(s))?.ToArray(),
+                            NetworkName = response.NetName,
+                            OwnerName = response.OrgName,
+                            FromIp = response.IPFrom,
+                            ToIp = response.IPTo
                         };
-
-                        analysis.WhoisSource = queryResponse.ServerResponses.Last().Server;
-                        analysis.CIDR = response.CIDR?.Split(",", false)?.Select(s => s.Trim())?.Where(s => !string.IsNullOrWhiteSpace(s))?.ToArray();
-                        analysis.NetworkName = response.NetName;
-                        analysis.OwnerName = response.OrgName;
-                        analysis.FromIp = response.IPFrom;
-                        analysis.ToIp = response.IPTo;
 
                         LastQuery = DateTime.Now;
 
                         AddAnalysis(analysis);
                     }
 
-                    SaveAnalysis();
+                    _ = SaveAnalysis();
 
                     foreach (IPAnalysis iPAnalysis in toReturn)
                     {
@@ -276,7 +270,7 @@ namespace Penguin.Net.IPServices
             {
                 LastSave = DateTime.Now;
 
-                System.Console.WriteLine("Saving data...");
+                Console.WriteLine("Saving data...");
 
                 SaveFunction?.Invoke(DiscoveredRanges);
 

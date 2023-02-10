@@ -1,4 +1,4 @@
-﻿namespace Penguin.Net.IPServices.Registrations
+﻿namespace Penguin.Net.IPService.Registrations
 {
     internal class SingleIPRegistration : IPRegistration
     {
