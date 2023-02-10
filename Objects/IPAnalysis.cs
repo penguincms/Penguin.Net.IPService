@@ -97,31 +97,36 @@ namespace Penguin.Net.IPService.Objects
 
         [NonSerialized]
         private List<IIPRegistration> Registrations;
+
         /// <inheritdoc/>
 
         public override bool Equals(object obj)
         {
             throw new NotImplementedException();
         }
+
         /// <inheritdoc/>
 
         public override int GetHashCode()
         {
             throw new NotImplementedException();
         }
+
         /// <inheritdoc/>
 
         public static bool operator ==(IPAnalysis left, IPAnalysis right)
         {
             return left.Equals(right);
         }
+
         /// <inheritdoc/>
 
         public static bool operator !=(IPAnalysis left, IPAnalysis right)
         {
             return !(left == right);
         }
-/// <inheritdoc/>
+
+        /// <inheritdoc/>
 
         public bool Equals(IPAnalysis other)
         {
