@@ -138,19 +138,19 @@
             <returns>True if the given IP is part of the same range as this one</returns>
         </member>
         <member name="M:Penguin.Net.IPService.Objects.IPAnalysis.Equals(System.Object)">
-            <inheritdoc />
+            <inheritdoc/>
         </member>
         <member name="M:Penguin.Net.IPService.Objects.IPAnalysis.GetHashCode">
-            <inheritdoc />
+            <inheritdoc/>
         </member>
         <member name="M:Penguin.Net.IPService.Objects.IPAnalysis.op_Equality(Penguin.Net.IPService.Objects.IPAnalysis,Penguin.Net.IPService.Objects.IPAnalysis)">
-            <inheritdoc />
+            <inheritdoc/>
         </member>
         <member name="M:Penguin.Net.IPService.Objects.IPAnalysis.op_Inequality(Penguin.Net.IPService.Objects.IPAnalysis,Penguin.Net.IPService.Objects.IPAnalysis)">
-            <inheritdoc />
+            <inheritdoc/>
         </member>
         <member name="M:Penguin.Net.IPService.Objects.IPAnalysis.Equals(Penguin.Net.IPService.Objects.IPAnalysis)">
-            <inheritdoc />
+            <inheritdoc/>
         </member>
         <member name="T:Penguin.Net.IPService.Objects.IPRange">
             <summary>
