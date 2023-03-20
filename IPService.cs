@@ -110,8 +110,8 @@ namespace Penguin.Net.IPService
                     }
                     else
                     {
-                        string propertyName = line.Split(":", false)[0];
-                        string Regex = line.Split(":", false)[1];
+                        string propertyName = line.Split(':')[0];
+                        string Regex = line.Split(':')[1];
 
                         if (!blacklistedRegex.ContainsKey(propertyName))
                         {
@@ -234,7 +234,7 @@ namespace Penguin.Net.IPService
                         {
                             DiscoveryDate = DateTime.Now,
                             WhoisSource = queryResponse.ServerResponses.Last().Server,
-                            CIDR = response.CIDR?.Split(",", false)?.Select(s => s.Trim())?.Where(s => !string.IsNullOrWhiteSpace(s))?.ToArray(),
+                            CIDR = response.CIDR?.Split(',')?.Select(s => s.Trim())?.Where(s => !string.IsNullOrWhiteSpace(s))?.ToArray(),
                             NetworkName = response.NetName,
                             OwnerName = response.OrgName,
                             FromIp = response.IPFrom,
